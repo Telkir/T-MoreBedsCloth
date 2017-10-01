@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <!-- Handle beds with a costlist -->
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <li Class="PatchOperationTest">
+        <xpath>/Buildings/ThingDef[defName = "Bed"]/costList</xpath>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Buildings/ThingDef[defName = "Bed"]/costList</xpath>
+        <value>
+          <Cloth>12</Cloth>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <li Class="PatchOperationTest">
+        <xpath>/Buildings/ThingDef[defName = "DoubleBed"]/costList</xpath>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Buildings/ThingDef[defName = "DoubleBed"]/costList</xpath>
+        <value>
+          <Cloth>18</Cloth>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <li Class="PatchOperationTest">
+        <xpath>/Buildings/ThingDef[defName = "RoyalBed"]/costList</xpath>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Buildings/ThingDef[defName = "RoyalBed"]/costList</xpath>
+        <value>
+          <Cloth>24</Cloth>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+
+
+
+  <!-- Handle beds without a costlist (skip royal beds, they always have one)-->
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <li Class="PatchOperationTest">
+        <xpath>/Buildings/ThingDef[defName = "Bed"]/costlist</xpath>
+        <success>Invert</success>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Buildings/ThingDef[defName = "Bed"]</xpath>
+        <value>
+          <costList>
+            <Cloth>12</Cloth>
+          </costList>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <li Class="PatchOperationTest">
+        <xpath>/Buildings/ThingDef[defName = "DoubleBed"]/costlist</xpath>
+        <success>Invert</success>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Buildings/ThingDef[defName = "DoubleBed"]</xpath>
+        <value>
+          <costList>
+            <Cloth>18</Cloth>
+          </costList>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+
+
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Buildings/ThingDef[defName = "Bed"]/graphicData/texPath</xpath>
+    <value>
+      <texPath>Things/Building/Bed</texPath>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Buildings/ThingDef[defName = "DoubleBed"]/graphicData/texPath</xpath>
+    <value>
+      <texPath>Things/Building/DoubleBed</texPath>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Buildings/ThingDef[defName = "RoyalBed"]/graphicData/texPath</xpath>
+    <value>
+      <texPath>Things/Building/RoyalBed</texPath>
+    </value>
+  </Operation>
+
+
+
+  <!-- If Anonemous2's MoreFurniture is detected, add linkables -->
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <li Class="RWModLoadedChecker.PatchOperationCheckForMoreFurniture"></li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[@Name = "BedBase" or @Name = "DoubleBedBase" or @Name = "RoyalBedBase"]/comps/li[@Class = "CompProperties_AffectedByFacilities"]/linkableFacilities</xpath>
+        <value>
+          <li>Anon2Dresser</li>
+          <li>Anon2EndTable</li>
+          <li>Anon2EndTableLight</li>
+          <li>Anon2RoyalEndTable</li>
+          <li>Anon2RoyalEndTableLight</li>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+
+</Patch>
